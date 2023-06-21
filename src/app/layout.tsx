@@ -1,12 +1,14 @@
 import { ReactNode } from 'react'
 import './globals.css'
 import { Roboto } from 'next/font/google'
+import Image from 'next/image'
 
 const roboto = Roboto({
   weight: ['400', '700'],
   style: ['normal', 'italic'],
   subsets: ['latin'],
   display: 'swap',
+  variable: '--font-roboto',
 })
 
 export const metadata = {
@@ -17,7 +19,15 @@ export const metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
-      <body className={roboto.className}>{children}</body>
+      <body className={roboto.className}>
+        <div className="flex min-h-full flex-col items-center">
+          <header className="mx-auto my-0 w-full max-w-full px-8 py-4">
+            <Image src="/logo-project.svg" alt="me" width={136} height={52} />
+          </header>
+
+          {children}
+        </div>
+      </body>
     </html>
   )
 }
