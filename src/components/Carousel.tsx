@@ -1,6 +1,6 @@
 'use client'
 
-import { HTMLAttributes } from 'react'
+import { HTMLAttributes, Children } from 'react'
 import 'keen-slider/keen-slider.min.css'
 import { useKeenSlider } from 'keen-slider/react'
 
@@ -17,9 +17,12 @@ export default async function Carousel({
       spacing: 48,
     },
   })
+
   return (
     <div ref={sliderRef} className="keen-slider">
-      {children}
+      {Children.map(children, (child) => (
+        <div className="keen-slider__slide">{child}</div>
+      ))}
     </div>
   )
 }

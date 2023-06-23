@@ -1,45 +1,22 @@
 import Image from 'next/image'
-import Carousel from './carousel'
-import Stripe from 'stripe'
+import Carousel from '../components/Carousel'
 import { listProducts, preload } from '@/utils/product'
-
-interface Procuct {
-  id: string
-  name: string
-  description: string | null
-  image: string
-  price: string
-}
-
-export const revalidate = 60 * 60 // 1 hour
+import Link from 'next/link'
 
 export default async function Home() {
   preload()
 
-  const response = await listProducts()
-
-  const products: Procuct[] = response.data.map((product) => {
-    const price = product.default_price as Stripe.Price
-
-    return {
-      id: product.id,
-      name: product.name,
-      description: product.description,
-      image: product.images[0],
-      price: new Intl.NumberFormat('pt-br', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(price.unit_amount ? price.unit_amount / 100 : 0),
-    }
-  })
+  const products = await listProducts()
 
   return (
     <main className="ml-auto min-h-[656px] w-full max-w-[calc(1180px+(100vw-1180px)/2)]">
       <Carousel>
         {products.map((product) => (
-          <a
+          <Link
+            href={`/product/${product.id}`}
             key={product.id}
-            className="keen-slider__slide group relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[8px] bg-gradient-to-b from-[#1ea483] to-[#7465d4] p-1"
+            // prefetch={false}
+            className="group relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-[8px] bg-gradient-to-b from-[#1ea483] to-[#7465d4] p-1"
           >
             <Image
               src={product.image}
@@ -55,7 +32,7 @@ export default async function Home() {
                 {product.price}
               </span>
             </footer>
-          </a>
+          </Link>
         ))}
       </Carousel>
     </main>
