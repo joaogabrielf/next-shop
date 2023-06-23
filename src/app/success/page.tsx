@@ -1,4 +1,5 @@
 import { stripe } from '@/lib/stripe'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
@@ -8,6 +9,11 @@ interface successProps {
   searchParams: {
     session_id: string
   }
+}
+
+export const metadata: Metadata = {
+  title: 'Compra efetuada! | Next Shop',
+  robots: 'noindex',
 }
 
 export default async function Success({ searchParams }: successProps) {
