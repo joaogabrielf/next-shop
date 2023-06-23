@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { getProduct } from '@/utils/product'
-import ButtonForm from '@/components/ButtonForm'
+import Button from '@/components/Button'
 import { Metadata } from 'next'
 interface ProcuctParams {
   params: {
@@ -43,12 +43,12 @@ export default async function Product({ params }: ProcuctParams) {
           {product.description}
         </p>
 
-        <ButtonForm
+        <Button
           productId={product.defaultPriceId}
           className="mt-auto w-full cursor-pointer rounded-[8px] border-0 bg-green-500 p-5 text-lg font-bold text-white disabled:cursor-not-allowed disabled:opacity-60 [&:not(:disabled)]:hover:bg-green-300"
         >
           Buy
-        </ButtonForm>
+        </Button>
       </div>
     </main>
   )

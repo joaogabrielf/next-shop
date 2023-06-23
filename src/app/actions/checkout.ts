@@ -1,6 +1,6 @@
 'use server'
 
-import { notFound } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 import { stripe } from '@/lib/stripe'
 
@@ -24,5 +24,5 @@ export const createCheckout = async (productId: string) => {
     ],
   })
 
-  return checkoutSession.url ?? '/'
+  redirect(checkoutSession.url ?? '/')
 }
